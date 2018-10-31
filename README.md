@@ -14,6 +14,10 @@ git clone https://github.com/eskuero/pyfzf_launcher
 ```
 pip3 install --user .
 ```
+3. You could also compile the C version and place the generated executable on your PATH
+```
+gcc fzf_launcher.c -o $HOME/.local/bin/fzf-launcher
+```
 ## Usage
 Launch with the command
 ```
@@ -31,6 +35,7 @@ konsole
 		--prompt "Launch: " \
 		--color="bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75"
 ```
+Replace as needed to use the C executable name of your choice.
 Will open a konsole window, with all the settings from the profile "Pop-up" and execute the launcher enabling case insensitive search, arranging the options by alphabetical order, using the string "Launch: " as custom prompt and a set of colors that will look like this:
 
 <img src="https://raw.githubusercontent.com/eskuero/pyfzf-launcher/master/example.gif" width=640>
