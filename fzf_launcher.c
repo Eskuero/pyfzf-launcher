@@ -67,12 +67,10 @@ void fillstore(char *directory, struct Applications *apps) {
 					// If line starts with Name= save it on the store without the newline character
 					if (strncmp(line, "Name=", 5) == 0) {
 						name = 1;
-						line[strlen(line) - 1] = '\0';
 						strcpy(apps[i].name, &line[5]);
 					// If line starts with Exec= save it on the store without the newline character
 					} else if (strncmp(line, "Exec=", 5) == 0) {
 						exec = 1;
-						line[strlen(line) - 1] = '\0';
 						char *ptr = strstr(line, "%");
 						// Replace variables meant to be used for arguments from gui apps
 						if (ptr) {
@@ -151,7 +149,7 @@ int main(int argc, char **argv) {
 	// Loop through the store and compose a newline separated list of program names
 	for (int i = 0; i < leftovers; i++) {
 		char program[150];
-		snprintf(program, sizeof(program), "%s\n", apps[i].name);
+		snprintf(program, sizeof(program), "%s", apps[i].name);
 		strcat(list, program);
 	}
 	// Show the selector to the user
@@ -171,8 +169,6 @@ int main(int argc, char **argv) {
 	write(parentpipefd[1], list, strlen(list));
 	// Retrieve the selection from stdout
 	read(childpipefd[0], selection, sizeof(selection));
-	// Delete the newline to be able to compare
-	selection[strlen(selection) - 1] = '\0';
 	// Loop the store and compose a command with the exec that matches the selected name
 	for (int i = 0; i < leftovers; i++) {
 		if (!strcmp(apps[i].name, selection)) {
